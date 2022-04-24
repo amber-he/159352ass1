@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html >
+    <head>
+        <meta charset="UTF-8">
+        <title>SignIn</title>
+    </head>
+
+    <body>
+
+        <section class="user">
+            <form method="post">
+                <br>
+                <p align="center">User Sign In</p><br>
+               <p>
+                Username:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="Username" name="Username" align="center" style="width:250px;height: 20px;" ></p><br>
+                <p>
+                Password: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="Password" name="Password" align="center" style="width:250px;height: 20px;" ></p><br>
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="submit" align="center" style="width:240px;height: 20px;" onclick="pop()" ></p>
+            </form>
+
+    </section>
+        <script>
+
+            function pop(){
+                var u="19029757";
+                var p="19029757";
+                var username=document.getElementById("Username").value;
+                var password=document.getElementById("Password").value;
+                const data={un:username,pw:password};
+
+                console.log(data);
+                 if(username==u && password==p){
+                    alert("sign in successfully");
+                };
+            }
+
+        </script>
+
+</body>
+</html>
+

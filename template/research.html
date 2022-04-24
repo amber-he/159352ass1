@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+     <head>
+         <title>research page </title>
+     </head>
+     <body>
+      <form method= "post" >
+        <table>
+        <tr><td>stocksymbol</td><td><select type="text" id="stocksymbol" name="stocksymbol"  style="width:250px;height: 20px;" ><option>AAA</option><option>AAAU</option><option>AAC+</option><option>AAC=</option></select></td></tr>
+        </table>
+        <input type="submit" value="research" align="center" style="width:240px;height: 20px;" onclick="Datacheck()">
+      </form>
+      <table frame=void>
+          <tr><td></td></tr>
+      </table>
+     </body><br>
+    <script>
+    function Datacheck(){
+                alert("Data update");
+            }
+    </script>
+     <canvas width="900px" height="450px"></canvas>
+	<script>
+		var data=[];
+		var mmin=0;var mmax=0;var xlong=0;
+        var yg=(mmax-mmin)/400;
+        var xg=800/xlong;
+        var year=[];
+		var LineChart = function(ctx) {
+
+			this.ctx = document.querySelector("canvas").getContext("2d");
+			console.log(this.ctx);
+			this.cWidth = this.ctx.canvas.width;
+			this.cHeight = this.ctx.canvas.height;
+            this.max=mmax;
+            this.min=mmin;
+            this.ygrid=yg;
+            this.ypopmy=(this.max-this.min)/5;
+			this.space = 30;
+			this.grid = 0.35;
+			this.arrowSize = 5;
+			this.dottedSize = 1;
+			this.x0 = this.space;
+			this.y0 = this.cHeight-this.space;
+		};
+		LineChart.prototype.init = function(data) {
+
+			this.drawAxis();
+
+			this.drawDotted(data);
+		};
+
+		LineChart.prototype.drawAxis = function(){
+			this.ctx.beginPath();
+			this.ctx.moveTo(this.x0,this.y0);
+			this.ctx.lineTo(this.cWidth-this.space,this.y0);
+			this.ctx.lineTo(this.cWidth-this.space-this.arrowSize,this.y0+this.arrowSize/2);
+			this.ctx.lineTo(this.cWidth-this.space-this.arrowSize,this.y0-this.arrowSize/2);
+			this.ctx.lineTo(this.cWidth-this.space,this.y0);
+			this.ctx.strokeStyle = "#000";
+			this.ctx.stroke();
+			this.ctx.fill();
+
+			this.ctx.beginPath();
+			this.ctx.moveTo(this.x0,this.y0);
+			this.ctx.lineTo(this.x0,this.space);
+			this.ctx.lineTo(this.x0+this.arrowSize/2,this.space+this.arrowSize);
+			this.ctx.lineTo(this.x0-this.arrowSize/2,this.space+this.arrowSize);
+			this.ctx.lineTo(this.x0,this.space);
+			this.ctx.strokeStyle = "#000";
+			this.ctx.stroke();
+			this.ctx.fill();
+			this.ctx.fillText(mmin,this.x0-27,this.y0);
+			this.ctx.fillText(mmax,this.x0-27,this.y0-((mmax-mmin)/yg));
+
+		}
+		LineChart.prototype.drawDotted = function(){
+			var that = this;
+			var prevCanvasX = 0;
+			var prevCanvasY = 0;
+			data.forEach(function(item,i){
+
+				var canvasX = that.x0+item.x*xg;
+                var canvasY=that.y0-((item.y-mmin)/yg);
+
+
+				if(i==0){
+					that.ctx.beginPath();
+					that.ctx.moveTo(that.x0,that.y0);
+					that.ctx.lineTo(canvasX,canvasY);
+					that.ctx.stroke();
+				}else{
+					that.ctx.beginPath();
+					that.ctx.moveTo(prevCanvasX,prevCanvasY);
+					that.ctx.lineTo(canvasX,canvasY);
+					that.ctx.stroke();
+				}
+				for(var f=0;f<year.length;f++){
+					if(year[f][0]==i){
+						that.ctx.fillText(year[f][1],canvasX,that.y0+10);
+					}
+				}
+				prevCanvasX = canvasX;
+				prevCanvasY = canvasY;
+			});
+		}
+
+		var boo=0;
+        if(boo==1){
+            var lineChart = new LineChart();
+		    lineChart.init(data);
+        }
+	</script>
+
+</html>
